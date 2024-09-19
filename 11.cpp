@@ -5,12 +5,9 @@ using namespace std;
 //  Class Company
 class company
 {
-public:
+  public:
   vector<company> Cars;
   string car, model, status, rate;
-  int ch;
-
-public:
   void addCar();
   void removeCar();
   void showCarlist();
@@ -22,7 +19,7 @@ public:
 
 company::company()
 {
-  cout << "\t\t\tWelcome \n";
+  cout << "\t\t\t WELCOME \n";
   for (int i = 0; i <= 60; i++)
   {
     cout << "*";
@@ -76,8 +73,7 @@ void company::removeCar()
   cout << "Car not found \n";
 }
 
-// Function to remove car
-
+// show carlist
 void company::showCarlist()
 {
   
@@ -88,6 +84,8 @@ void company::showCarlist()
   }
   cout << endl;
 }
+
+// Class User to accept data of user
 
 class user : protected company
 {
@@ -101,6 +99,8 @@ public:
   void returnCar();
 };
 
+// function to book car
+
 void user::bookCar()
 {
   company::showCarlist();
@@ -111,9 +111,9 @@ void user::bookCar()
 
   for (int i = 0; i < Cars.size(); i++)
   {
-    if (carName == Cars[i].car && carModle == Cars[i].model)
+    if (carName == Cars[i].car && carModle == Cars[i].model)   //compare if car is available or not
     {
-      if (Cars[i].status == "Rented" || Cars[i].status == "rented")
+      if (Cars[i].status == "Rented" || Cars[i].status == "rented")  //compare if car is rented or not
       {
         cout << "Car is Already rented\n";
       }
@@ -135,6 +135,8 @@ void user::bookCar()
   }
   cout << "Invalid Car\n";
 }
+
+// function to return car
 
 void user::returnCar()
 {
