@@ -7,15 +7,14 @@ class company
 {
 public:
   vector<company> Cars;
-  string car, model, status;
-  int rate;
+  string car, model, status, rate;
 
 public:
   void addCar();
   void removeCar();
   void showCarlist();
   company();
-  company(string c, string m, string s, int r);
+  company(string c, string m, string s, string r);
 };
 
 // Default constructor
@@ -28,14 +27,12 @@ company::company()
     cout << "*";
   }
   cout << endl;
-  Cars.push_back(company("BMW", "Q5", "Available", 125));
-  Cars.push_back(company("Honda", "City", "Available", 25));
-  Cars.push_back(company("Suzuki", "Swift", "Available",15));
+  Cars.push_back(company("BMW", "Q5", "Available", "125"));
 }
 
 // Parameterized constructor for setting values
 
-company::company(string c, string m, string s, int r)
+company::company(string c, string m, string s, string r)
 {
   car = c;
   model = m;
@@ -105,6 +102,16 @@ public:
   void returnCar();
 };
 
+void user::bill()
+{
+  cout << "Name: " << name << endl;
+  cout << "Car Name: " << carName << endl;
+  cout << "Car Modle: " << carModle << endl;
+  cout << "Pickup addr: " << pickup << endl;
+  cout << "Destination addr: " << destination << endl;
+  cout << "Total Amount: " << km << endl;
+}
+
 void user::bookCar()
 {
   company::showCarlist();
@@ -134,9 +141,8 @@ void user::bookCar()
         cout << "Enter the total Km: ";
         cin >> km;
         Cars[i].status = "Rented";
-        km*=Cars[i].rate;
-        cout << "Car rented succesfully!\n";
         bill();
+        cout << "Car rented succesfully!\n";
       }
       return;
     }
@@ -161,25 +167,6 @@ void user::returnCar()
     }
   }
   cout << "Invalid Car\n";
-}
-
-void user::bill()
-{
-  for (int i = 0; i < 60; i++)
-  {
-    cout << "*";
-  }
-  cout << "\n\t\t\tBILL\n";
-  cout << "Name: " << name << endl;
-  cout << "Car Name: " << carName << endl;
-  cout << "Car Modle: " << carModle << endl;
-  cout << "Pickup Addr:"<< pickup << endl;
-  cout << "Destination Addr: " << destination << endl;
-  cout << "Total Amount: "<< km <<" Rs."<< endl;
-  for (int i = 0; i < 60; i++)
-  {
-    cout << "*";
-  }
 }
 
 void user::getchoice_user()
