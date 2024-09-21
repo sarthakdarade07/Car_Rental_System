@@ -78,7 +78,7 @@ void company::removeCar()
   cout << "Car not found \n";
 }
 
-// Function to remove car
+// Function to show Carlist car
 
 void company::showCarlist()
 {
@@ -90,6 +90,8 @@ void company::showCarlist()
   }
   cout << endl;
 }
+
+// Class user to accept user details
 
 class user : protected company
 {
@@ -104,6 +106,8 @@ public:
   void bookCar();
   void returnCar();
 };
+
+ // function to book car
 
 void user::bookCar()
 {
@@ -144,6 +148,8 @@ void user::bookCar()
   cout << "Invalid Car\n";
 }
 
+// function to return car 
+
 void user::returnCar()
 {
   cout << "Enter Car name: ";
@@ -163,6 +169,7 @@ void user::returnCar()
   cout << "Invalid Car\n";
 }
 
+// function to get booking bill 
 void user::bill()
 {
   for (int i = 0; i < 60; i++)
