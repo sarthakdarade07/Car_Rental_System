@@ -152,7 +152,7 @@ void user::returnCar()
   cin >> carModle;
   for (int i = 0; i < Cars.size(); i++)
   {
-    if (carName == Cars[i].car && carModle == Cars[i].model)
+    if (carName == Cars[i].car && carModle == Cars[i].model && Cars[i].status!="Available")
     {
       Cars[i].status = "Available";
 
