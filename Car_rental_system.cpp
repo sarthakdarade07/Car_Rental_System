@@ -30,7 +30,7 @@ company::company()
   cout << endl;
   Cars.push_back(company("BMW", "Q5", "Available", 125));
   Cars.push_back(company("Honda", "City", "Available", 25));
-  Cars.push_back(company("Suzuki", "Swift", "Available",15));
+  Cars.push_back(company("Suzuki", "Swift", "Available", 15));
 }
 
 // Parameterized constructor for setting values
@@ -107,12 +107,12 @@ public:
   void returnCar();
 };
 
- // function to book car
+// function to book car
 
 void user::bookCar()
 {
   company::showCarlist();
-  cout << "Enter Car name:  ";
+  cout << "Enter Car name: ";
   cin >> carName;
   cout << "Enter car Modle: ";
   cin >> carModle;
@@ -128,7 +128,8 @@ void user::bookCar()
       else
       {
         cout << "Enter your Name: ";
-        cin >> name;
+        cin.ignore();
+        getline(cin, name);
         cout << "Enter pickup Address: ";
         cin.ignore();
         getline(cin, pickup);
@@ -138,8 +139,8 @@ void user::bookCar()
         cout << "Enter the total Km: ";
         cin >> km;
         Cars[i].status = "Rented";
-        km*=Cars[i].rate;
-        cout << "Car rented succesfully!\n";
+        km *= Cars[i].rate;
+        cout << "\nCar rented succesfully!\n";
         bill();
       }
       return;
@@ -148,7 +149,7 @@ void user::bookCar()
   cout << "Invalid Car\n";
 }
 
-// function to return car 
+// function to return car
 
 void user::returnCar()
 {
@@ -158,7 +159,7 @@ void user::returnCar()
   cin >> carModle;
   for (int i = 0; i < Cars.size(); i++)
   {
-    if (carName == Cars[i].car && carModle == Cars[i].model && Cars[i].status!="Available")
+    if (carName == Cars[i].car && carModle == Cars[i].model && Cars[i].status != "Available")
     {
       Cars[i].status = "Available";
 
@@ -169,7 +170,7 @@ void user::returnCar()
   cout << "Invalid Car\n";
 }
 
-// function to get booking bill 
+// function to get booking bill
 void user::bill()
 {
   for (int i = 0; i < 60; i++)
@@ -180,9 +181,9 @@ void user::bill()
   cout << "Name: " << name << endl;
   cout << "Car Name: " << carName << endl;
   cout << "Car Modle: " << carModle << endl;
-  cout << "Pickup Addr:"<< pickup << endl;
+  cout << "Pickup Addr:" << pickup << endl;
   cout << "Destination Addr: " << destination << endl;
-  cout << "Total Amount: "<< km <<" Rs."<< endl;
+  cout << "Total Amount: " << km << " Rs." << endl;
   for (int i = 0; i < 60; i++)
   {
     cout << "*";
@@ -207,6 +208,7 @@ void user::getchoice_user()
       break;
     case 3:
       return;
+      break;
     default:
       cout << "Entered valid choice\n";
     }
@@ -249,20 +251,36 @@ int main()
   {
     cout << "\n 1.User\n 2.Company\n 3.Exit\n";
     cout << "Enter Your choice:";
-    cin >> ch1;
-    switch (ch1)
+
+    try
+    {             // Exception handling : If user enter choice other than int value it will
+      cin >> ch1; // get terminated in controlled manner
+      if (ch1 == 0)
+      {
+        throw(ch1);
+      }
+      else
+      {
+        switch (ch1)
+        {
+        case 1:
+          u1.getchoice_user();
+          break;
+        case 2:
+          u1.getchoice_company();
+          break;
+        case 3:
+          cout << "THANK YOU!!";
+          break;
+        default:
+          cout << "Enter Valid Choice";
+        }
+      }
+    }
+    catch (int b)
     {
-    case 1:
-      u1.getchoice_user();
+      cout << "\nEnter choice in Integer!! \n\n";
       break;
-    case 2:
-      u1.getchoice_company();
-      break;
-    case 3:
-      cout << "THANK YOU!!";
-      break;
-    default:
-      cout << "Enter Valid Choice";
     }
   } while (ch1 != 3);
 
