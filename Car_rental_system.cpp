@@ -121,7 +121,7 @@ void user::bookCar()
   {
     if (carName == Cars[i].car && carModle == Cars[i].model)
     {
-      if (Cars[i].status == "Rented" || Cars[i].status == "Rented")
+      if (Cars[i].status == "Rented" || Cars[i].status == "rented")
       {
         cout << "Car is Already rented\n";
       }
