@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
 using namespace std;
 
 //  Class Company
@@ -22,13 +23,14 @@ public:
 
 company::company()
 {
+  ofstream fout;
   cout << "\t\t\t WELCOME \n";
   for (int i = 0; i <= 60; i++)
   {
     cout << "*";
   }
   cout << endl;
-  Cars.push_back(company("BMW", "Q5", "Available", 125));
+  Cars.push_back(company("Audi", "Q5", "Available", 125));
   Cars.push_back(company("Honda", "City", "Available", 25));
   Cars.push_back(company("Suzuki", "Swift", "Available", 15));
 }
@@ -70,9 +72,17 @@ void company::removeCar()
   {
     if (Cars[i].car == car && Cars[i].model == model)
     {
-      Cars.erase(Cars.begin() + i);
-      cout << "Car removed sucessfully!!\n";
-      return;
+      if (Cars[i].status == "Rented")
+      {
+        cout << "Car is rented,can't remove\n";
+        return;
+      }
+      else
+      {
+        Cars.erase(Cars.begin() + i);
+        cout << "Car removed sucessfully!!\n";
+        return;
+      }
     }
   }
   cout << "Car not found \n";
@@ -105,6 +115,7 @@ public:
   void bill();
   void bookCar();
   void returnCar();
+  void bill_file();
 };
 
 // function to book car
@@ -142,6 +153,7 @@ void user::bookCar()
         km *= Cars[i].rate;
         cout << "\nCar rented succesfully!\n";
         bill();
+        bill_file();
       }
       return;
     }
@@ -188,6 +200,22 @@ void user::bill()
   {
     cout << "*";
   }
+}
+
+// Function to store booking details history into file
+
+void user::bill_file()
+{
+  fstream fout;
+  fout.open("Bill.txt", ios::app); // file is opened in append mode
+  fout << "Name: " << name << endl;
+  fout << "Car Name: " << carName << endl;
+  fout << "Car Modle: " << carModle << endl;
+  fout << "Pickup Addr:" << pickup << endl;
+  fout << "Destination Addr: " << destination << endl;
+  fout << "Total Amount: " << km << " Rs." << "\n";
+  fout << endl;
+  fout.close();
 }
 
 void user::getchoice_user()
@@ -247,6 +275,7 @@ int main()
 {
   user u1;
   int ch1;
+
   do
   {
     cout << "\n 1.User\n 2.Company\n 3.Exit\n";
