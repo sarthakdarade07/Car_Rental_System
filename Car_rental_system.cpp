@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include<algorithm>
 using namespace std;
 
 //  Class Company
@@ -33,6 +34,7 @@ company::company()
   Cars.push_back(company("Audi", "Q5", "Available", 125));
   Cars.push_back(company("Honda", "City", "Available", 25));
   Cars.push_back(company("Suzuki", "Swift", "Available", 15));
+  
 }
 
 // Parameterized constructor for setting values
@@ -275,7 +277,6 @@ int main()
 {
   user u1;
   int ch1;
-
   do
   {
     cout << "\n 1.User\n 2.Company\n 3.Exit\n";
