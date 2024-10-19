@@ -302,6 +302,7 @@ void user::bill_file()
   fout << "Destination Addr: " << destination << endl;
   fout << "Total Amount: " << km << " Rs." << "\n";
   fout << endl;
+
   fout.close();
 }
 
@@ -375,8 +376,8 @@ int main()
     cout << "Enter Your choice:";
 
     try
-    {             // Exception handling : If user enter choice other than int value it will
-      cin >> ch1; // get terminated in controlled manner
+    {                   // Exception handling : If user enter choice other than int value it will
+      cin >> ch1;       // get terminated in controlled manner
       if (ch1 == 0)
       {
         throw(ch1);
