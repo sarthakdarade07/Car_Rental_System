@@ -1,8 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include<algorithm>
+#include <algorithm>
 using namespace std;
+
+// Template function for sorting
+template <typename T, typename Compare>
+void sortVector(vector<T> &vec, Compare comp)
+{
+  sort(vec.begin(), vec.end(), comp);
+}
 
 //  Class Company
 class company
@@ -16,6 +23,7 @@ public:
   void addCar();
   void removeCar();
   void showCarlist();
+  void show_history();
   company();
   company(string c, string m, string s, int r);
 };
@@ -24,16 +32,16 @@ public:
 
 company::company()
 {
-  ofstream fout;
   cout << "\t\t\t WELCOME \n";
   for (int i = 0; i <= 60; i++)
   {
     cout << "*";
   }
   cout << endl;
+  Cars.push_back(company("Suzuki", "Swift", "Available", 15));
   Cars.push_back(company("Audi", "Q5", "Available", 125));
   Cars.push_back(company("Honda", "City", "Available", 25));
-  Cars.push_back(company("Suzuki", "Swift", "Available", 15));
+  
 }
 
 // Parameterized constructor for setting values
@@ -93,7 +101,11 @@ void company::removeCar()
 
 void company::showCarlist()
 {
-
+  // Using lambda to compare car names
+  sortVector(Cars, [](const company &a, const company &b)
+             {
+               return a.car < b.car; // Sorting in ascending order by car name
+             });
   cout << "\nCar Name " << "Model " << "rate perkm " << "Status \n";
   for (int i = 0; i < Cars.size(); i++)
   {
@@ -101,9 +113,24 @@ void company::showCarlist()
   }
   cout << endl;
 }
+
+void company::show_history(){
+ifstream fin;
+fin.open("Bill.txt");
+char ch;
+if (!fin){
+cout<<"No Bookings Yet\n";
+}
+else{
+  while (fin.get(ch))
+  {
+    cout <<"\n"<< ch;
+  }
+  fin.close();
+}
+}
 class Transport_vehicle
 {
-
 private:
   string vehicleName, cname;
   string description;
@@ -115,16 +142,24 @@ private:
 public:
   Transport_vehicle()
   {
-    vec1.push_back("Tata MiniTruck");
-    vec2.push_back("Good for small distance and low weight");
+    vec1.push_back("Tata Ace");
+    vec2.push_back(" Small businesses,transporting over short distances.");
+    vec3.push_back(25.0);
+
+    vec1.push_back("Bolero Pickup");
+    vec2.push_back(" Agricultural products and medium-weight loads.   ");
     vec3.push_back(30.0);
+
+    vec1.push_back("Tata LPT");
+    vec2.push_back(" Heavy cargo transportation over long distances.");
+    vec3.push_back(50.0);
   }
   void book_vehicle()
   {
-    cout << "Enter vehical name: ";
+    cout << "\n Enter vehical name: ";
     cin.ignore();
     getline(cin, vehicleName);
-
+ 
     for (int i = 0; i < vec1.size(); i++)
     {
       if (vehicleName == vec1[i])
@@ -132,30 +167,29 @@ public:
         cout << "Enter your Name: ";
         cin.ignore();
         getline(cin, cname);
-        cout << "Enter Km";
+        cout << "Enter Km: ";
         cin >> km;
         cout << "Vehicle Booked Succesfully\n";
+        return;
       }
-      else
-      {
+      }
         cout << "Invalid Car";
-      }
       return;
     }
-  }
   void display()
   {
+    cout << "\n Vehicle Name  " << "  Vechile Description" << "\t\t\t\t\t  Price \\km \n";
     for (int i = 0; i < vec1.size(); i++)
     {
-      cout<<"Vehicle Name  "<<"  Vechile Description"<<"\t\t\t\t  Price \\km \n";
-      cout << vec1[i] << " \t" << vec2[i] << "\t\t\t" << vec3[i] << endl;
+      cout << vec1[i] << " \t" << vec2[i] << "\t\t" << vec3[i] << endl;
     }
   }
 };
 
+
 // Class user to accept user details
 
-class user : protected company,protected Transport_vehicle
+class user : protected company, protected Transport_vehicle
 {
 private:
   string name, carName, carModle, pickup, destination;
@@ -290,8 +324,8 @@ void user::getchoice_user()
       display();
       book_vehicle();
       break;
-     case 4:
-     return;
+    case 4:
+      return;
       break;
     default:
       cout << "Entered valid choice\n";
@@ -304,7 +338,7 @@ void user::getchoice_company()
   int ch;
   do
   {
-    cout << "\n 1.Add Car\n 2.Remove Car\n 3.Show Carlist\n 4.Back\n";
+    cout << "\n 1.Add Car\n 2.Remove Car\n 3.Show Carlist\n 4.Show booking History\n 5.Back\n";
     cout << "Enter Your choice:";
     cin >> ch;
     switch (ch)
@@ -319,56 +353,57 @@ void user::getchoice_company()
       showCarlist();
       break;
     case 4:
+      show_history();
+      break;
+      case 5:
       return;
       break;
     default:
       cout << "Enter Valid Choice\n";
     }
-  } while (ch != 4);
+  } while (ch != 5);
 }
 
+int main()
+{
+  user u1;
+  int ch1;
+  do
+  {
+    cout << "\n 1.User\n 2.Company\n 3.Exit\n";
+    cout << "Enter Your choice:";
 
-
-      int main()
+    try
+    {             // Exception handling : If user enter choice other than int value it will
+      cin >> ch1; // get terminated in controlled manner
+      if (ch1 == 0)
       {
-        user u1;
-        int ch1;
-        do
-        {
-          cout << "\n 1.User\n 2.Company\n 3.Exit\n";
-          cout << "Enter Your choice:";
-
-          try
-          {             // Exception handling : If user enter choice other than int value it will
-            cin >> ch1; // get terminated in controlled manner
-            if (ch1 == 0)
-            {
-              throw(ch1);
-            }
-            else
-            {
-              switch (ch1)
-              {
-              case 1:
-                u1.getchoice_user();
-                break;
-              case 2:
-                u1.getchoice_company();
-                break;
-              case 3:
-                cout << "THANK YOU!!";
-                break;
-              default:
-                cout << "Enter Valid Choice";
-              }
-            }
-          }
-          catch (int b)
-          {
-            cout << "\nEnter choice in Integer!! \n\n";
-            break;
-          }
-        } while (ch1 != 3);
-
-        return 0;
+        throw(ch1);
       }
+      else
+      {
+        switch (ch1)
+        {
+        case 1:
+          u1.getchoice_user();
+          break;
+        case 2:
+          u1.getchoice_company();
+          break;
+        case 3:
+          cout << "THANK YOU!!";
+          break;
+        default:
+          cout << "Enter Valid Choice";
+        }
+      }
+    }
+    catch (int b)
+    {
+      cout << "\nEnter choice in Integer!! \n\n";
+      break;
+    }
+  } while (ch1 != 3);
+
+  return 0;
+}
