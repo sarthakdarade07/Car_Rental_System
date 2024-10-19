@@ -122,9 +122,10 @@ if (!fin){
 cout<<"No Bookings Yet\n";
 }
 else{
+  cout<<endl;
   while (fin.get(ch))
   {
-    cout <<"\n"<< ch;
+    cout<<ch;
   }
   fin.close();
 }
