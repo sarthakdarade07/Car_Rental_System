@@ -41,7 +41,6 @@ company::company()
   Cars.push_back(company("Suzuki", "Swift", "Available", 15));
   Cars.push_back(company("Audi", "Q5", "Available", 125));
   Cars.push_back(company("Honda", "City", "Available", 25));
-  
 }
 
 // Parameterized constructor for setting values
@@ -114,21 +113,24 @@ void company::showCarlist()
   cout << endl;
 }
 
-void company::show_history(){
-ifstream fin;
-fin.open("Bill.txt");
-char ch;
-if (!fin){
-cout<<"No Bookings Yet\n";
-}
-else{
-  cout<<endl;
-  while (fin.get(ch))
+void company::show_history()
+{
+  ifstream fin;
+  fin.open("Bill.txt");
+  char ch;
+  if (!fin)
   {
-    cout<<ch;
+    cout << "No Bookings Yet\n";
   }
-  fin.close();
-}
+  else
+  {
+    cout << endl;
+    while (fin.get(ch))
+    {
+      cout << ch;
+    }
+    fin.close();
+  }
 }
 class Transport_vehicle
 {
@@ -160,7 +162,7 @@ public:
     cout << "\n Enter vehical name: ";
     cin.ignore();
     getline(cin, vehicleName);
- 
+
     for (int i = 0; i < vec1.size(); i++)
     {
       if (vehicleName == vec1[i])
@@ -173,10 +175,10 @@ public:
         cout << "Vehicle Booked Succesfully\n";
         return;
       }
-      }
-        cout << "Invalid Car";
-      return;
     }
+    cout << "Invalid Car";
+    return;
+  }
   void display()
   {
     cout << "\n Vehicle Name  " << "  Vechile Description" << "\t\t\t\t\t  Price \\km \n";
@@ -186,7 +188,6 @@ public:
     }
   }
 };
-
 
 // Class user to accept user details
 
@@ -311,8 +312,8 @@ void user::getchoice_user()
   int ch;
   do
   {
-    cout << "\n 1.Book Car\n 2.Return Car\n 3.Book transport vehicle\n 4.back\n";
-    cout << "Enter Your choice:";
+    cout << "\n 1.Book Cab\n 2.Return Car\n 3.Book transport vehicle\n 4.back\n";
+    cout << "\nEnter Your choice:";
     cin >> ch;
     switch (ch)
     {
@@ -341,8 +342,9 @@ void user::getchoice_company()
   do
   {
     cout << "\n 1.Add Car\n 2.Remove Car\n 3.Show Carlist\n 4.Show booking History\n 5.Back\n";
-    cout << "Enter Your choice:";
+    cout << "\nEnter Your choice:";
     cin >> ch;
+
     switch (ch)
     {
     case 1:
@@ -357,7 +359,7 @@ void user::getchoice_company()
     case 4:
       show_history();
       break;
-      case 5:
+    case 5:
       return;
       break;
     default:
@@ -376,8 +378,8 @@ int main()
     cout << "Enter Your choice:";
 
     try
-    {                   // Exception handling : If user enter choice other than int value it will
-      cin >> ch1;       // get terminated in controlled manner
+    {             // Exception handling : If user enter choice other than int value it will
+      cin >> ch1; // get terminated in controlled manner
       if (ch1 == 0)
       {
         throw(ch1);
